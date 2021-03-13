@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Mqtt Test</title>
+	<style>
+		table, th, td {
+		  border: 1px solid black;
+		  width:800px;
+		}
+		.loader {
+		  border: 6px solid #f3f3f3; /* Light grey */
+		  border-top: 6px solid #3498db; /* Blue */
+		  border-radius: 50%;
+		  width: 20px;
+		  height: 20px;
+		  animation: spin 2s linear infinite;
+		}
+
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+	</style>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  </head>
+  <body>
+	<h4 id="connect"><div class="loader"></div></h4>
+    <button id="button">Click Me</button>
+	<table id="msg" style="margin-top:10px;">
+	  <tr id="add_after_me">
+		<th>Topic</th>
+		<th>Message</th>
+		<th>Time</th>
+	  </tr>
+	</table>
+    <script>
+      const client = mqtt.connect('ws://test123:12345@192.168.0.196:9001', {
+        clientId: 'javascript'
+      });
+
+      client.on('connect', function() {
+		console.log('connected!');
+		document.getElementById("connect").innerHTML = "CONNECTED";
+		client.subscribe('#');
+      });
+
+      client.on('message', function(topic, message) {
+        console.log(topic + ': ' + message.toString());
+		document.getElementById("add_after_me").insertAdjacentHTML("afterend", 
+                "<tr><td>"+topic+"</td><td>"+message.toString()+"</td><td>"+new Date().toLocaleString()+"</td></tr>"); 
+      });
+
+      document.querySelector('button').addEventListener('click', function() {
+        client.publish('topic2', 'test mesage', function(){
+			alert("Message published");
+		});
+      });
+    </script>
+  </body>
+</html>

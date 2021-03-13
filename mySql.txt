@@ -1,0 +1,30 @@
+sudo apt update
+sudo apt upgrade
+
+To start mysql on system restart as a service=>  sudo systemctl enable mysql
+sudo systemctl restart mysql
+sudo systemctl start mysql  or sudo service mysql start 
+sudo systemctl stop mysql
+
+REINSTALL- sudo apt-get install --reinstall mariadb-server
+sudo apt purge mariadb-server
+sudo rm -rf /var/lib/mysql/
+
+sudo apt install mariadb-server
+
+secure your MySQL installation:
+
+ sudo mysql_secure_installation
+
+Db=>
+sudo mysql -u root -p
+
+Creating a MySQL Database and User =>
+1. CREATE DATABASE exampledb;
+2. create user 'exampleuser'@'localhost' identified by 'your_password';
+3. grant all privileges on exampledb.* to 'exampleuser'@'localhost';
+4. FLUSH PRIVILEGES;
+
+Without flushing the privilege table, the new user won’t be able to access the database.
+
+sudo service mysql restart

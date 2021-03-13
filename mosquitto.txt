@@ -1,0 +1,33 @@
+
+sudo systemctl enable mosquitto.service  => Run Mosquitto as a service
+
+sudo systemctl stop mosquitto.service
+sudo systemctl start mosquitto.service
+sudo systemctl restart mosquitto.service
+sudo apt-get purge --remove mosquitto*
+
+1. sudo apt install mosquitto mosquitto-clients
+
+Link: https://stevessmarthomeguide.com/install-mosquitto-raspberry-pi/
+
+
+SUB=> mosquitto_sub -h localhost -t test -d
+PUBLISH=> mosquitto_pub -h localhost -t test -m message
+
+To create user & password file:- mosquitto_passwd -c passwordfile <user_name>
+allow_anonymous false in Mosquitto.conf (dir: etc/mosquitto)
+
+or 
+sudo adduser <user_name>
+
+Verify Auth
+
+mosquitto_sub -h localhost -t myTopic -u <user_name> -P <password>
+mosquitto_pub -h localhost -t myTopic -m message -u <user_name> -P <password>
+
+
+Setup MQTT over Websockets (dir: /etc/mosquitto/mosquitto.conf)
+
+port 1883
+listener 9001
+protocol websockets

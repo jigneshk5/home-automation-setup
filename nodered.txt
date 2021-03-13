@@ -1,0 +1,8 @@
+Run Node-RED when the Pi boots up =>
+sudo systemctl enable nodered.service
+
+node-red-stop
+
+node-red-start
+
+Nodered service start on port 1880 at: http://{your_pi_ip-address}:1880 
